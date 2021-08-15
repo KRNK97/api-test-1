@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import *
 
+
+# user creation serializer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
@@ -11,7 +13,6 @@ class UserSerializer(serializers.ModelSerializer):
                 'write_only': True
             }
         }
-
         print("serializer========")
 
     # valdiate the input fields with the given data
@@ -34,3 +35,16 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+
+# user updation serializer
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ('id','username','email','phone','country')                    # no password field
+
+    def validate(self,data):
+        if len(str(data["phone"])) != 10:
+            raise serializers.ValidationError("Phone # must be 10 characters long.")
+
+        return data
