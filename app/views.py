@@ -1,9 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
 from django.shortcuts import HttpResponseRedirect
-from rest_framework.generics import CreateAPIView,ListAPIView,DestroyAPIView
+from rest_framework.generics import CreateAPIView,ListAPIView,DestroyAPIView,UpdateAPIView,RetrieveUpdateAPIView
 from .models import CustomUser
-from .serializers import UserSerializer
+from .serializers import *
 
 
 # create a user
@@ -22,3 +22,9 @@ class ListUser(ListAPIView):
 class DeleteUser(DestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
+
+
+# update user
+class UpdateUser(RetrieveUpdateAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserUpdateSerializer
